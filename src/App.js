@@ -21,6 +21,7 @@ function App () {
   }, [])
 
   return (
+    <>
     <Map
       {...viewState}
       onMove={onMove}
@@ -30,6 +31,14 @@ function App () {
     >
       <Marker longitude={longitude} latitude={latitude} color="red" />
     </Map>
+    <form>
+      <input type="text" placeholder={'Type longitude'} 
+             onChange={({target}) => setViewState({...viewState, longitude: target.value})} />
+      <input type="text" placeholder={'Type latitude'} 
+             onChange={({target}) => setViewState({...viewState, latitude: target.value})}
+      />
+    </form>
+    </>
   )
 }
 
