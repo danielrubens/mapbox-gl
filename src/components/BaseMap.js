@@ -4,6 +4,7 @@ import Map, { Source, Layer, Marker } from 'react-map-gl'
 import MAPBOX_TOKEN from '../mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import city from '../mapbox/city.json'
+import createPolygon from '../utils'
 // import * as turf from '@turf/turf'
 
 
@@ -12,17 +13,7 @@ function BaseMap () {
   const longitude = -43.05188941
   const zoom = 10
 
-  const geojson = {
-    type: 'FeatureCollection',
-    features: [
-      {type: 'Feature', geometry:
-      {
-        type: city.features[0].geometry.type, 
-        coordinates: city.features[0].geometry.coordinates
-      }
-    }
-    ]
-  }
+  const geojson = createPolygon(city)
 
   const layerStyle = {
     id: 'line',
