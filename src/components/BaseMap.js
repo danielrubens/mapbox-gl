@@ -9,7 +9,7 @@ import createPolygon from '../utils'
 
 
 function BaseMap () {
-  const latitude = -9.184663
+  const latitude = -9.24663
   const longitude = -43.05188941
   const zoom = 10
 
