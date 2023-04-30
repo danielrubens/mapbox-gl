@@ -1,6 +1,6 @@
 import React, {useState, useCallback} from 'react'
 import './BaseMap.css'
-import Map, { Source, Layer, Marker, NavigationControl } from 'react-map-gl'
+import Map, { Source, Layer, Marker, NavigationControl, ScaleControl } from 'react-map-gl'
 import MAPBOX_TOKEN from '../mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import city from '../mapbox/city.json'
@@ -59,6 +59,7 @@ function BaseMap () {
       </Source>
       <Marker longitude={longitude} latitude={-9.184663} color="red" />
       <NavigationControl/>
+      <ScaleControl />
     </Map>
     <form >
       <input type="text" placeholder={'Type latitude'} 
