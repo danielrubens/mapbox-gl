@@ -59,7 +59,7 @@ function BaseMap () {
       </Source>
       <Marker longitude={longitude} latitude={-9.184663} color="red" />
       <NavigationControl/>
-      <ScaleControl />
+      <ScaleControl maxWidth="250" />
     </Map>
     <form >
       <input type="text" placeholder={'Type latitude'} 
