@@ -1,18 +1,16 @@
 import React, {useState, useCallback} from 'react'
 import './BaseMap.css'
-import Map, { Source, Layer, Marker } from 'react-map-gl'
+import Map, { Source, Layer, Marker, NavigationControl } from 'react-map-gl'
 import MAPBOX_TOKEN from '../mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import city from '../mapbox/city.json'
 import createPolygon from '../utils'
-// import * as turf from '@turf/turf'
 
 
 function BaseMap () {
   const latitude = -9.24663
   const longitude = -43.05188941
   const zoom = 10
-
   const geojson = createPolygon(city)
 
   const layerStyle = {
@@ -29,11 +27,8 @@ function BaseMap () {
   const [viewState, setViewState] = useState({longitude, latitude, zoom})
 
   const onMove = useCallback(({viewState}) => {
-    console.log(city.features[0].geometry.coordinates)
     const newCenter = [viewState.longitude, viewState.latitude]
-    // if (turf.booleanPointInPolygon(newCenter, GEOFENCE)){
-      setViewState(newCenter)
-    // }
+    setViewState(newCenter)
   }, [])
 
   const search = () => {
@@ -52,16 +47,18 @@ function BaseMap () {
     <Map
       {...viewState}
       onMove={onMove}
-      style={{ width: 1200, height: 700 }}
+      style={{ width: 1280, height: 660 }}
       // mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
       mapStyle="mapbox://styles/mapbox/outdoors-v12"
+      // mapStyle="mapbox://styles/mapbox/navigation-day-v1"
       // mapStyle='mapbox://styles/mapbox/light-v11'
       mapboxAccessToken={MAPBOX_TOKEN}
     >
       <Source id="my-data" type="geojson" data={geojson}>
         <Layer {...layerStyle}/>
       </Source>
-      <Marker longitude={longitude} latitude={latitude} color="red" />
+      <Marker longitude={longitude} latitude={-9.184663} color="red" />
+      <NavigationControl/>
     </Map>
     <form >
       <input type="text" placeholder={'Type latitude'} 
