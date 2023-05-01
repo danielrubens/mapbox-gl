@@ -1,25 +1,35 @@
+/* eslint-disable react/prop-types */
 import React, {useState, useCallback} from 'react'
 import './BaseMap.css'
-import Map, { Source, Layer, Marker, NavigationControl, ScaleControl } from 'react-map-gl'
-import MAPBOX_TOKEN from '../mapbox'
+import MapDraw from '@mapbox/mapbox-gl-draw'
+import Map, { Source, Layer, Marker, NavigationControl, ScaleControl, useControl } from 'react-map-gl'
+import { MAPBOX_TOKEN, cities }  from '../mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import city from '../mapbox/city.json'
+// import city from '../mapbox/city.json'
+// import jurema from '../mapbox/jurema.json'
 import createPolygon from '../utils'
 
+const DrawControl = (props) => {
+  useControl(() => new MapDraw(props), {
+    position: props.position
+  })
+  return null
+}
 
 function BaseMap () {
   const latitude = -9.24663
   const longitude = -43.05188941
   const zoom = 10
-  const geojson = createPolygon(city)
+  const geojson = createPolygon(cities)
 
   const layerStyle = {
     id: 'line',
     type: 'line',
     paint: {
-      'line-color': '#007cbf'
+      'line-color': '#000000'
     }
   }
+
 
   const [latInput, setLatInput] = useState('')
   const [lonInput, setLonInput] = useState('')
@@ -50,16 +60,25 @@ function BaseMap () {
       style={{ width: 1280, height: 660 }}
       // mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
       mapStyle="mapbox://styles/mapbox/outdoors-v12"
+      // mapStyle="mapbox://styles/mapbox/satellite-v9"
       // mapStyle="mapbox://styles/mapbox/navigation-day-v1"
       // mapStyle='mapbox://styles/mapbox/light-v11'
       mapboxAccessToken={MAPBOX_TOKEN}
     >
+      <DrawControl 
+        position="top-left"
+        displayControlsDefault={false}
+        controls={{
+          polygon: true, trash: true
+        }}
+      />
       <Source id="my-data" type="geojson" data={geojson}>
         <Layer {...layerStyle}/>
       </Source>
       <Marker longitude={longitude} latitude={-9.184663} color="red" />
       <NavigationControl/>
       <ScaleControl maxWidth="250" />
+
     </Map>
     <form >
       <input type="text" placeholder={'Type latitude'} 
@@ -75,4 +94,7 @@ function BaseMap () {
   )
 }
 
+
 export default BaseMap
+
+
